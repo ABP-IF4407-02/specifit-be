@@ -14,25 +14,9 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            
-            $table->string('phone');
-            $table->string('role')->default('user');
-            $table->string('gender');
-            $table->string('date_of_birth');
-            $table->integer('age')->nullable();
-            $table->integer('height');
-            $table->integer('weight');
-            $table->integer('activity');
-            $table->boolean('isFilled')->nullable();
-            $table->integer('medicalCondition');
-            $table->integer('calPerDayHold')->nullable();
-            $table->integer('calPerDayLose')->nullable();
-            $table->string('imt')->nullable();
-            $table->string('imtStatus')->nullable();
-            // TODO: has to be validated beforehand
-            $table->json('recommendation')->nullable();
-
             $table->string('email')->unique();
+            $table->string('phone');
+            $table->integer('role')->default(1); // 1 = user, 2 = admin.
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
