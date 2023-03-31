@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
+        'role',
     ];
 
     /**
@@ -51,6 +52,6 @@ class User extends Authenticatable
     protected $dates = ['email_verified_at'];
 
     public function userdata() { 
-        return $this->hasOne(UserData::class, 'user_email', 'email');
+        return $this->hasOne(UserData::class, 'userEmail', 'email');
     }
 }
