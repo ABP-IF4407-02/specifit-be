@@ -15,12 +15,14 @@ class UserData extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'userEmail', 
         'activity',
         'age',
         'calPerDayHold',
         'calPerDayLose',
         'dateOfBirth',
         'gender',
+        'height',
         'imt',
         'imtStatus',
         'isFilled',
@@ -31,6 +33,6 @@ class UserData extends Model
     ];
 
     public function user() { 
-        return $this->belongsTo(User::class, 'user_email', 'email');
+        return $this->belongsTo(User::class, 'userEmail', 'email');
     }
 }
