@@ -13,6 +13,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
+// TODO: add token limit time
 {
     public function register(Request $req) { 
         try { 
@@ -30,12 +31,13 @@ class UserController extends Controller
                     ->symbols()
                 ], 
             ]);
+            
             User::create([ 
                 'name' => $req->name, 
                 'email' => strtolower($req->email), 
                 'phone' => $req->phone, 
                 'password' => Hash::make($req->password), 
-                'role' => $req->role|1, 
+                'role' => $req->role ?? 1, 
             ]);
 
             $user = User::where('email', $req->email)->first();
@@ -91,22 +93,51 @@ class UserController extends Controller
         ], 'User Authenticated');
     }
 
-    public function fetch(Request $req) { 
+    public function get(Request $req) { 
         try { 
-            $data = UserData::where('userEmail', $req->user()->email)->first(); 
+            $data = User::where('email', $req->user()->email)->first(); 
 
             if (!$data) { 
                 return ResponseFormatter::error([ 
                     'error' => 'No User Data is Found', 
-                ], 'User Data Fetch Failed', 500);
+                ], 'Fetching User Data Has Failed', 500);
             }
             
         } catch (Exception $err) { 
             return ResponseFormatter::error([ 
                 'error' => $err->getMessage(), 
-            ], 'User Data Fetch Failed', 500);
+            ], 'Fetching User Data Has Failed', 500);
         }
 
         return ResponseFormatter::success($data, 'Data Fetched Successfully');
+    }
+
+    public function edit(Request $req) { 
+        try { 
+            $req->validate([
+                'name' => ['string', 'max:255'], 
+                'phone' => ['string', 'max:20'], 
+            ]);
+
+            $data = User::where('email', $req->user()->email)->first(); 
+
+            if (!$data) { 
+                return ResponseFormatter::error([ 
+                    'error' => 'No User Data is Found', 
+                ], 'Fetching User Data Has Failed', 500);
+            }
+
+            $data->update([ 
+                'name' =>  $req->name ?? $data->name,
+                'phone' => $req->phone ?? $data->phone,
+            ]);
+            
+        } catch (Exception $err) { 
+            return ResponseFormatter::error([ 
+                'error' => $err->getMessage(), 
+            ], 'Fetching User Data Has Failed', 500);
+        }
+
+        return ResponseFormatter::success($data, 'Data Updated Successfully');
     }
 }

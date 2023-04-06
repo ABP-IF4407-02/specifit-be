@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\ResponseFormatter;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,5 +47,16 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        // Handle authentication exception
+        if ($exception instanceof AuthenticationException) {
+            return ResponseFormatter::error(null, $exception->getMessage(), 401);
+        }
+
+        // Handle other exceptions
+        return parent::render($request, $exception);
     }
 }
