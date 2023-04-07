@@ -17,7 +17,6 @@ class Workout extends Model
     protected $fillable = [
         'ctgList',
         'desc',
-        'est',
         'img',
         'title',
         'totalEst',

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\Workout;
 use App\Models\WorkoutProgram;
 use Illuminate\Http\Request;
 use Exception;
@@ -15,14 +14,19 @@ class WorkoutProgramController extends Controller
         try { 
             $req->validate([ 
                 'desc' => ['required', 'string'],
-                'img' => ['required', 'string'],
+                'img' => "required|image|mimes:jpg,png,jpeg,gif,svg",
                 'title' => ['required', 'string', 'max:255'],
             ]);
+
+            $imgName = time().'.'.$req->img->extension();
+            $path = 'public/images/workoutprogram/'.$imgName;
+
+            $req->img->move(public_path('images/workoutprogram'), $imgName);
 
             $workout = WorkoutProgram::create([
                 'ctgList' => array($req->ctgList),
                 'desc' => $req->desc,
-                'img' => $req->img,
+                'img' => $path,
                 'title' => $req->title,
                 'workouts' => array($req->workouts),
             ]);
@@ -72,7 +76,7 @@ class WorkoutProgramController extends Controller
             ], 'Fetching Workout Program Has Failed', 500);
         }
         return ResponseFormatter::success([
-            'total' => Workout::count(),
+            'total' => WorkoutProgram::count(),
             'data' => $data, 
         ], 'Workout Program Created Successfully');
     }
@@ -81,7 +85,7 @@ class WorkoutProgramController extends Controller
         try { 
             $req->validate([ 
                 'desc' => ['string'],
-                'img' => ['string'],
+                'img' => "required|image|mimes:jpg,png,jpeg,gif,svg",
                 'title' => ['string', 'max:255'],
             ]);
 
@@ -93,13 +97,17 @@ class WorkoutProgramController extends Controller
                 ], 'Editing Workout Program Has Failed', 500);
             }
 
+            $imgName = time().'.'.$req->img->extension();
+            $path = 'public/images/workoutprogram/'.$imgName;
 
-            $workout = WorkoutProgram::create([
-                'ctgList' => array($req->ctgList),
-                'desc' => $req->desc,
-                'img' => $req->img,
-                'title' => $req->title,
-                'workouts' => array($req->workouts),
+            $req->img->move(public_path('images/workoutprogram'), $imgName);
+
+            $data->update([
+                'ctgList' => array($req->ctgList) ?? $data->title,
+                'desc' => $req->desc ?? $data->desc,
+                'img' => $path ?? $data->img,
+                'title' => $req->title ?? $data->title,
+                'workouts' => array($req->workouts) ?? $data->workouts,
             ]);
 
         } catch (Exception $err) { 
@@ -107,7 +115,7 @@ class WorkoutProgramController extends Controller
                 'error' => $err->getMessage(), 
             ], 'Editing Workout Program Has Failed', 500);
         }
-        return ResponseFormatter::success($workout, 'Workout Program Created Successfully');
+        return ResponseFormatter::success($data, 'Workout Program Created Successfully');
     }
 
     public function delete(Request $req) { 

@@ -16,7 +16,7 @@ class TipController extends Controller
                 'title' => ['required', 'string'],
                 'author' => ['required', 'string'],
                 'article' => ['required', 'string'],
-                'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
             ]); 
 
             $imgName = time().'.'.$req->img->extension();
@@ -28,7 +28,7 @@ class TipController extends Controller
                 'title' => $req->title, 
                 'author' => $req->author, 
                 'article' => $req->article, 
-                'img' => $path|"", 
+                'img' => $path, 
             ]);
 
         } catch (Exception $err) { 
@@ -96,7 +96,7 @@ class TipController extends Controller
                 'title' => ['required', 'string'],
                 'author' => ['required', 'string'],
                 'article' => ['required', 'string'],
-                'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+                'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
             ]); 
             // TODO: consider using slug instead of ID
             $data = Tip::where('_id', $req->id)->first(); 
@@ -107,17 +107,16 @@ class TipController extends Controller
                 ], 'Editing Tip Has Failed', 500);
             }
 
-
             // $path = $req->file('img')->store('public/images/');
             $imgName = time().'.'.$req->img->extension();
             $path = 'public/images/tips/'.$imgName;
             $req->img->move(public_path('images/tips'), $imgName);
 
             $data->update([ 
-                'title' => $req->title, 
-                'author' => $req->author, 
-                'article' => $req->article, 
-                'img' => $path|"", 
+                'title' => $req->title ?? $data->title, 
+                'author' => $req->author ?? $data->author, 
+                'article' => $req->article ?? $data->article, 
+                'img' => $path ?? $data->img, 
             ]);
 
             
