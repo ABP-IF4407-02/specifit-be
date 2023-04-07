@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TipController;
+use App\Http\Controllers\API\UserDataController;
 use App\Http\Controllers\API\WorkoutController;
 use App\Http\Controllers\API\WorkoutProgramController;
 use App\Http\Controllers\Controller;
@@ -23,7 +24,7 @@ Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function() {
-    
+
     Route::middleware('adminonly')->group(function() {
         Route::post('tips', [TipController::class, 'create']);
         Route::post('tips/edit/{id}', [TipController::class, 'edit']); // can't use PUT/PATCH in laravel somehow??
@@ -51,4 +52,8 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::get('workoutprogram/{id}', [WorkoutProgramController::class, 'getById']);
     Route::get('workoutprogram', [WorkoutProgramController::class, 'getAll']);
+
+    Route::get('userdata', [UserDataController::class, 'get']);
+    Route::post('userdata', [UserDataController::class, 'create']);
+    Route::post('userdata/edit', [UserDataController::class, 'edit']);
 });

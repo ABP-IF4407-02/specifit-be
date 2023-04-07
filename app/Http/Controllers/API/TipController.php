@@ -120,7 +120,6 @@ class TipController extends Controller
             ]);
 
             
-            
         } catch (Exception $err) { 
             return ResponseFormatter::error([ 
                 'error' => $err->getMessage(), 
