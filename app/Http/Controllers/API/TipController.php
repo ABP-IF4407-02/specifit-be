@@ -107,10 +107,11 @@ class TipController extends Controller
                 ], 'Editing Tip Has Failed', 500);
             }
 
-            // $path = $req->file('img')->store('public/images/');
-            $imgName = time().'.'.$req->img->extension();
-            $path = 'images/tips/'.$imgName;
-            $req->img->move(public_path('images/tips'), $imgName);
+            if ($req->img) { 
+                $imgName = time().'.'.$req->img->extension();
+                $path = 'images/tips/'.$imgName;
+                $req->img->move(public_path('images/tips'), $imgName);
+            }
 
             $data->update([ 
                 'title' => $req->title ?? $data->title, 
