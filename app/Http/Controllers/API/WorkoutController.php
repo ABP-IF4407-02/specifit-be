@@ -92,7 +92,7 @@ class WorkoutController extends Controller
                 'desc' => ['string'],
                 'img' => "image|mimes:jpg,png,jpeg,gif,svg",
                 'title' => ['string', 'max:255'],
-                'totalEst' => ['integer'],
+                'totalEst' => ['string'],
                 'vid' => ['string'],
                 'workoutId' => ['integer'],
             ]);
