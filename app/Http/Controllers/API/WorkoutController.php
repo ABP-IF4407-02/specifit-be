@@ -105,10 +105,13 @@ class WorkoutController extends Controller
                 ], 'Editing Workout Has Failed', 500);
             }
 
-            $imgName = time().'.'.$req->img->extension();
-            $path = 'images/workout/'.$imgName;
+            if ($req->img) { 
+                $imgName = time().'.'.$req->img->extension();
+                $path = 'images/workout/'.$imgName;
+    
+                $req->img->move(public_path('images/workout'), $imgName);
+            }
 
-            $req->img->move(public_path('images/workout'), $imgName);
 
             $data->update([
                 'ctgList' => array($req->ctgList) ?? $data->ctgList,
