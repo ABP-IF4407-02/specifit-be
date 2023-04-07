@@ -14,25 +14,26 @@ class WorkoutController extends Controller
         try { 
             $req->validate([ 
                 'desc' => ['required', 'string'],
-                'est' => ['required', 'string'],
-                'img' => ['required', 'string'],
+                'img' => "required|image|mimes:jpg,png,jpeg,gif,svg",
                 'title' => ['required', 'string', 'max:255'],
                 'totalEst' => ['required', 'string'],
-                'vid' => ['required', 'string'],
-                // 'workoutId' => ['required   ', 'string'],
+                'vid' => ['string'],
             ]);
+
+            $imgName = time().'.'.$req->img->extension();
+            $path = 'public/images/workout/'.$imgName;
+
+            $req->img->move(public_path('images/workout'), $imgName);
 
             $workout = Workout::create([
                 'ctgList' => array($req->ctgList),
                 'desc' => $req->desc,
-                'est' => $req->est,
-                'img' => $req->img,
+                'img' => $path,
                 'title' => $req->title,
                 'totalEst' => $req->totalEst,
                 'vid' => $req->vid,
                 'workoutEsts' => array($req->workoutEsts),
                 'workoutLists' => array($req->workoutLists),
-                // 'workoutId' => $req->workoutId,
             ]);
 
         } catch (Exception $err) { 
@@ -89,8 +90,7 @@ class WorkoutController extends Controller
         try { 
             $req->validate([ 
                 'desc' => ['string'],
-                'est' => ['integer'],
-                'img' => ['string'],
+                'img' => "image|mimes:jpg,png,jpeg,gif,svg",
                 'title' => ['string', 'max:255'],
                 'totalEst' => ['integer'],
                 'vid' => ['string'],
@@ -105,18 +105,20 @@ class WorkoutController extends Controller
                 ], 'Editing Workout Has Failed', 500);
             }
 
+            $imgName = time().'.'.$req->img->extension();
+            $path = 'public/images/workout/'.$imgName;
 
-            $workout = Workout::create([
-                'ctgList' => array($req->ctgList),
-                'desc' => $req->desc,
-                'est' => $req->est,
-                'img' => $req->img,
-                'title' => $req->title,
-                'totalEst' => $req->totalEst,
-                'vid' => $req->vid,
-                'workoutEsts' => array($req->workoutEsts),
-                'workoutLists' => array($req->workoutLists),
-                'workoutId' => $req->workoutId,
+            $req->img->move(public_path('images/workout'), $imgName);
+
+            $data->update([
+                'ctgList' => array($req->ctgList) ?? $data->ctgList,
+                'desc' => $req->desc ?? $data->desc,
+                'img' => $path ?? $data->img,
+                'title' => $req->title ?? $data->title,
+                'totalEst' => $req->totalEst ?? $data->totalEst,
+                'vid' => $req->vid ?? $data->vid,
+                'workoutEsts' => array($req->workoutEsts) ?? $data->workoutEsts,
+                'workoutLists' => array($req->workoutLists) ?? $data->workoutLists,
             ]);
 
         } catch (Exception $err) { 
@@ -124,7 +126,7 @@ class WorkoutController extends Controller
                 'error' => $err->getMessage(), 
             ], 'Editing Workout Has Failed', 500);
         }
-        return ResponseFormatter::success($workout, 'Workout Created Successfully');
+        return ResponseFormatter::success($data, 'Workout Created Successfully');
     }
 
     public function delete(Request $req) { 
