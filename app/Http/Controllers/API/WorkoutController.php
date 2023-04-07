@@ -21,7 +21,7 @@ class WorkoutController extends Controller
             ]);
 
             $imgName = time().'.'.$req->img->extension();
-            $path = 'public/images/workout/'.$imgName;
+            $path = 'images/workout/'.$imgName;
 
             $req->img->move(public_path('images/workout'), $imgName);
 
@@ -62,7 +62,7 @@ class WorkoutController extends Controller
                 'error' => $err->getMessage(), 
             ], 'Workout Creation Has Failed', 500);
         }
-        return ResponseFormatter::success($data, 'Workout Created Successfully');
+        return ResponseFormatter::success($data, 'Workout Fetched Successfully');
     }
 
     public function getAll() { 
@@ -83,7 +83,7 @@ class WorkoutController extends Controller
         return ResponseFormatter::success([
             'total' => Workout::count(),
             'data' => $data, 
-        ], 'Workout Created Successfully');
+        ], 'Workout Fetched Successfully');
     }
 
     public function edit(Request $req) { 
@@ -106,7 +106,7 @@ class WorkoutController extends Controller
             }
 
             $imgName = time().'.'.$req->img->extension();
-            $path = 'public/images/workout/'.$imgName;
+            $path = 'images/workout/'.$imgName;
 
             $req->img->move(public_path('images/workout'), $imgName);
 
