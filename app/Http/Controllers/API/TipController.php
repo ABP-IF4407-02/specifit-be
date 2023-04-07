@@ -96,7 +96,7 @@ class TipController extends Controller
                 'title' => ['required', 'string'],
                 'author' => ['required', 'string'],
                 'article' => ['required', 'string'],
-                'img' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
+                'img' => 'image|mimes:jpg,png,jpeg,gif,svg',
             ]); 
             // TODO: consider using slug instead of ID
             $data = Tip::where('_id', $req->id)->first(); 

@@ -85,7 +85,7 @@ class WorkoutProgramController extends Controller
         try { 
             $req->validate([ 
                 'desc' => ['string'],
-                'img' => "required|image|mimes:jpg,png,jpeg,gif,svg",
+                'img' => "image|mimes:jpg,png,jpeg,gif,svg",
                 'title' => ['string', 'max:255'],
             ]);
 
