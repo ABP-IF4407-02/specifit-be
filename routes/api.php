@@ -4,6 +4,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TipController;
 use App\Http\Controllers\API\WorkoutController;
 use App\Http\Controllers\API\WorkoutProgramController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,8 @@ Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function() {
+    Route::post('image', [Controller::class, 'getImage']);
+
     Route::get('user', [UserController::class, 'get']); // get logged-in user data
     Route::post('user/edit', [UserController::class, 'edit']); 
 

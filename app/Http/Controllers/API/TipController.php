@@ -20,7 +20,7 @@ class TipController extends Controller
             ]); 
 
             $imgName = time().'.'.$req->img->extension();
-            $path = 'public/images/tips/'.$imgName;
+            $path = 'images/tips/'.$imgName;
 
             $req->img->move(public_path('images/tips'), $imgName);
 
@@ -109,7 +109,7 @@ class TipController extends Controller
 
             // $path = $req->file('img')->store('public/images/');
             $imgName = time().'.'.$req->img->extension();
-            $path = 'public/images/tips/'.$imgName;
+            $path = 'images/tips/'.$imgName;
             $req->img->move(public_path('images/tips'), $imgName);
 
             $data->update([ 

@@ -19,7 +19,7 @@ class WorkoutProgramController extends Controller
             ]);
 
             $imgName = time().'.'.$req->img->extension();
-            $path = 'public/images/workoutprogram/'.$imgName;
+            $path = 'images/workoutprogram/'.$imgName;
 
             $req->img->move(public_path('images/workoutprogram'), $imgName);
 
@@ -39,7 +39,7 @@ class WorkoutProgramController extends Controller
 
         return ResponseFormatter::success([
             'data' => $workout,
-        ], 'Workout Program Created Successfully');
+        ], 'Workout Program Fetched Successfully');
     }
 
     public function getById(Request $req) { 
@@ -49,15 +49,15 @@ class WorkoutProgramController extends Controller
             if (!$data) { 
                 return ResponseFormatter::error([ 
                     'error' => 'No Workout Program is Found', 
-                ], 'Workout Program Creation Has Failed', 500);
+                ], 'Fetching Workout Has Failed', 500);
             }
 
         } catch (Exception $err) { 
             return ResponseFormatter::error([ 
                 'error' => $err->getMessage(), 
-            ], 'Workout Creation Has Failed', 500);
+            ], 'Fetching Workout Has Failed', 500);
         }
-        return ResponseFormatter::success($data, 'Workout Created Successfully');
+        return ResponseFormatter::success($data, 'Workout Fetched Successfully');
     }
 
     public function getAll() { 
@@ -98,7 +98,7 @@ class WorkoutProgramController extends Controller
             }
 
             $imgName = time().'.'.$req->img->extension();
-            $path = 'public/images/workoutprogram/'.$imgName;
+            $path = 'images/workoutprogram/'.$imgName;
 
             $req->img->move(public_path('images/workoutprogram'), $imgName);
 
