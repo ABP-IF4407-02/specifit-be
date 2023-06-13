@@ -97,7 +97,7 @@ class UserDataController extends Controller
                 'calPerDayLose' => ['integer'], 
                 'gender' => ['integer'], 
                 'height' => ['integer'], 
-                'imt' => ['float'], 
+                'imt' => 'required|between:0,99.99', 
                 'imtStatus' => ['string'], 
                 'isFilled' => ['boolean'], 
                 'medicalCondition' => ['integer'], 
