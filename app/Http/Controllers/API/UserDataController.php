@@ -13,13 +13,13 @@ class UserDataController extends Controller
     public function create(Request $req) { 
         try { 
             $req->validate([ 
-                'activity' => ['required', 'string'], 
+                'activity' => ['required', 'integer'], 
                 'age' => ['required', 'integer'], 
                 'calPerDayHold' => ['required', 'integer'], 
                 'calPerDayLose' => ['required', 'integer'], 
                 'gender' => ['required', 'integer'], 
                 'height' => ['required', 'integer'], 
-                'imt' => ['required', 'string'], 
+                'imt' => 'required|between:0,99.99', 
                 'imtStatus' => ['required', 'string'], 
                 'isFilled' => ['required', 'boolean'], 
                 'medicalCondition' => ['required', 'integer'], 
@@ -91,13 +91,13 @@ class UserDataController extends Controller
     public function edit(Request $req) { 
         try { 
             $req->validate([ 
-                'activity' => ['string'], 
+                'activity' => ['integer'], 
                 'age' => ['integer'], 
                 'calPerDayHold' => ['integer'], 
                 'calPerDayLose' => ['integer'], 
                 'gender' => ['integer'], 
                 'height' => ['integer'], 
-                'imt' => ['string'], 
+                'imt' => ['float'], 
                 'imtStatus' => ['string'], 
                 'isFilled' => ['boolean'], 
                 'medicalCondition' => ['integer'], 
