@@ -20,7 +20,7 @@ class TipController extends Controller
             ]); 
 
             $imgName = time().'.'.$req->img->extension();
-            $path = 'images/tips/'.$imgName;
+            // $path = 'images/tips/'.$imgName;
 
             $req->img->move(public_path('images/tips'), $imgName);
 
@@ -28,7 +28,7 @@ class TipController extends Controller
                 'title' => $req->title, 
                 'author' => $req->author, 
                 'article' => $req->article, 
-                'img' => $path, 
+                'img' => $imgName, 
             ]);
 
         } catch (Exception $err) { 
@@ -42,7 +42,7 @@ class TipController extends Controller
             'title' => $req->title, 
             'author' => $req->author, 
             'article' => $req->article, 
-            'img' => $path, 
+            'img' => $imgName, 
         ], 'Tip Created Successfully');
     }
 
@@ -109,7 +109,7 @@ class TipController extends Controller
 
             if ($req->img) { 
                 $imgName = time().'.'.$req->img->extension();
-                $path = 'images/tips/'.$imgName;
+                // $path = 'images/tips/'.$imgName;
                 $req->img->move(public_path('images/tips'), $imgName);
             }
 
@@ -117,7 +117,7 @@ class TipController extends Controller
                 'title' => $req->title ?? $data->title, 
                 'author' => $req->author ?? $data->author, 
                 'article' => $req->article ?? $data->article, 
-                'img' => $path ?? $data->img, 
+                'img' => $imgName ?? $data->img, 
             ]);
 
             

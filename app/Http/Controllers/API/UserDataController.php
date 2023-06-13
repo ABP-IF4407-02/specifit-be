@@ -31,7 +31,7 @@ class UserDataController extends Controller
 
             if ($req->profileUrl) { 
                 $imgName = time().'.'.$req->img->extension();
-                $path = 'images/tips/'.$imgName;
+                // $path = 'images/tips/'.$imgName;
     
                 $req->img->move(public_path('images/tips'), $imgName);
             }
@@ -51,7 +51,7 @@ class UserDataController extends Controller
                 'medicalCondition' => $req->medicalCondition,
                 'recommendation' => array($req->recommendation),
                 'weight' => $req->weight,
-                'profileUrl' => $path ?? "",
+                'profileUrl' => $imgName ?? "",
             ]);
 
         } catch (Exception $err) { 
@@ -107,7 +107,7 @@ class UserDataController extends Controller
 
             if ($req->profileUrl) { 
                 $imgName = time().'.'.$req->img->extension();
-                $path = 'images/tips/'.$imgName;
+                // $path = 'images/tips/'.$imgName;
     
                 $req->img->move(public_path('images/tips'), $imgName);
             }
@@ -128,7 +128,7 @@ class UserDataController extends Controller
                 'medicalCondition' => $req->medicalCondition ?? $data->medicalConditoin,
                 'recommendation' => array($req->recommendation) ?? $data->recommendation,
                 'weight' => $req->weight ?? $data->weight,
-                'profileUrl' => $path ?? $data->profileUrl,
+                'profileUrl' => $imgName ?? $data->profileUrl,
             ]);
 
         } catch (Exception $err) { 

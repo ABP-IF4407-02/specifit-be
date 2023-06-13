@@ -19,14 +19,14 @@ class WorkoutProgramController extends Controller
             ]);
 
             $imgName = time().'.'.$req->img->extension();
-            $path = 'images/workoutprogram/'.$imgName;
+            // $path = 'images/workoutprogram/'.$imgName;
 
             $req->img->move(public_path('images/workoutprogram'), $imgName);
 
             $workout = WorkoutProgram::create([
                 'ctgList' => array($req->ctgList),
                 'desc' => $req->desc,
-                'img' => $path,
+                'img' => $imgName,
                 'title' => $req->title,
                 'workouts' => array($req->workouts),
             ]);
@@ -99,7 +99,7 @@ class WorkoutProgramController extends Controller
 
             if ($req->img) { 
                 $imgName = time().'.'.$req->img->extension();
-                $path = 'images/workoutprogram/'.$imgName;
+                // $path = 'images/workoutprogram/'.$imgName;
     
                 $req->img->move(public_path('images/workoutprogram'), $imgName);
             }
@@ -107,7 +107,7 @@ class WorkoutProgramController extends Controller
             $data->update([
                 'ctgList' => array($req->ctgList) ?? $data->title,
                 'desc' => $req->desc ?? $data->desc,
-                'img' => $path ?? $data->img,
+                'img' => $imgName ?? $data->img,
                 'title' => $req->title ?? $data->title,
                 'workouts' => array($req->workouts) ?? $data->workouts,
             ]);
