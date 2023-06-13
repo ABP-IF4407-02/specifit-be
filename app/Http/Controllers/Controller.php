@@ -35,4 +35,67 @@ class Controller extends BaseController
 
         return new Response($file, 200, ['Content-Type' => $type]);
     }
+
+    public function getTipsImage(Request $req) { 
+        try { 
+            $path = public_path('images/tips/'.$req->url);
+            $file = file_get_contents($path);
+            $type = mime_content_type($path);
+
+        } catch (Exception $err) { 
+            return ResponseFormatter::error([ 
+                'error' => $err->getMessage(), 
+            ], 'Fetching Image Has Failed', 500);
+        }   
+        
+        // return ResponseFormatter::success([
+        //     'data' => $file,
+        //     'Content-Type' => $type], 
+        //     'Image Fetched Successfully'
+        // );
+
+        return new Response($file, 200, ['Content-Type' => $type]);
+    }
+
+    public function getWorkoutImage(Request $req) { 
+        try { 
+            $path = public_path('images/workout/'.$req->url);
+            $file = file_get_contents($path);
+            $type = mime_content_type($path);
+
+        } catch (Exception $err) { 
+            return ResponseFormatter::error([ 
+                'error' => $err->getMessage(), 
+            ], 'Fetching Image Has Failed', 500);
+        }   
+        
+        // return ResponseFormatter::success([
+        //     'data' => $file,
+        //     'Content-Type' => $type], 
+        //     'Image Fetched Successfully'
+        // );
+
+        return new Response($file, 200, ['Content-Type' => $type]);
+    }
+
+    public function getUserDataImage(Request $req) { 
+        try { 
+            $path = public_path('userdata/workout/'.$req->url);
+            $file = file_get_contents($path);
+            $type = mime_content_type($path);
+
+        } catch (Exception $err) { 
+            return ResponseFormatter::error([ 
+                'error' => $err->getMessage(), 
+            ], 'Fetching Image Has Failed', 500);
+        }   
+        
+        // return ResponseFormatter::success([
+        //     'data' => $file,
+        //     'Content-Type' => $type], 
+        //     'Image Fetched Successfully'
+        // );
+
+        return new Response($file, 200, ['Content-Type' => $type]);
+    }
 }

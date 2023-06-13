@@ -40,6 +40,9 @@ Route::middleware('auth:sanctum')->group(function() {
     });
 
     Route::post('image', [Controller::class, 'getImage']);
+    Route::get('tips/image/{url}', [Controller::class, 'getTipsImage']);
+    Route::get('workout/image/{url}', [Controller::class, 'getWorkoutImage']);
+    Route::get('userdata/image/{url}', [Controller::class, 'getUserDataImage']);
 
     Route::get('user', [UserController::class, 'get']); // get logged-in user data
     Route::post('user/edit', [UserController::class, 'edit']); 
